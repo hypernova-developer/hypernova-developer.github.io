@@ -278,6 +278,25 @@
             box-shadow: 0 10px 30px rgba(56, 189, 248, 0.1);
         }
 
+        .ai-module-grid {
+            grid-template-columns: 1fr;
+            max-width: 800px;
+        }
+
+        .ai-card {
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .ai-card-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .ai-icon {
+            font-size: 2.5rem;
+        }
+
         .lang-card h3 {
             font-size: 1.6rem;
             margin-bottom: 12px;
@@ -351,6 +370,22 @@ int main()
             </div>
         </div>
     </section>
+
+    <div class="section-divider">
+        <h2>Modules</h2>
+    </div>
+
+    <div class="matrix-grid ai-module-grid">
+        <a href="https://github.com/hypernova-developer/SyntaX_for_AI" class="lang-card ai-card" target="_blank" rel="noopener noreferrer">
+            <div class="ai-card-content">
+                <span class="ai-icon">🧠</span>
+                <div>
+                    <h3>SyntaX_for_AI</h3>
+                    <p>A logic-driven neural engine. 48+ core functions integrating Classical ML, Deep Learning, and Evolutionary algorithms into a unified framework.</p>
+                </div>
+            </div>
+        </a>
+    </div>
 
     <div class="section-divider">
         <h2>Libraries</h2>
@@ -456,7 +491,7 @@ int main()
         }
         animate();
 
-        const interactiveElements = document.querySelectorAll('a, .terminal-box, .hub-button');
+        const interactiveElements = document.querySelectorAll('a, .terminal-box, .hub-button, .lang-card');
         interactiveElements.forEach(el => {
             el.addEventListener('mouseenter', () => {
                 dot.classList.add('cursor-active');
