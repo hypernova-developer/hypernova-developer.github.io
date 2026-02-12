@@ -17,6 +17,7 @@
             --terminal-bg: #0f172a;
             --terminal-header: #1e293b;
             --section-title: #f8fafc;
+            --download-glow: rgba(56, 189, 248, 0.4);
         }
 
         * {
@@ -305,6 +306,39 @@
 
         .lang-card p { font-size: 0.9rem; color: #94a3b8; }
 
+        .download-section {
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px 80px 20px;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(56, 189, 248, 0.2));
+            border: 2px solid var(--accent-color);
+            border-radius: 50px;
+            padding: 18px 45px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 20px var(--download-glow);
+        }
+
+        .download-btn:hover {
+            transform: scale(1.05);
+            background: var(--accent-color);
+            color: var(--bg-color);
+            box-shadow: 0 0 40px var(--accent-color);
+        }
+
+        .download-btn span {
+            font-size: 1.4rem;
+        }
+
         footer {
             text-align: center;
             padding: 60px 20px;
@@ -449,6 +483,12 @@ int main()
         </a>
     </div>
 
+    <div class="download-section">
+        <a href="SyntaX.zip" class="download-btn" download="SyntaX-Latest.zip">
+            <span>📦</span> Download Latest Release
+        </a>
+    </div>
+
     <footer>
         &copy; 2026 SyntaX Ecosystem - Developed by hypernova-developer.<br>
         The project is protected under the GNU General Public License v3.0.
@@ -491,7 +531,7 @@ int main()
         }
         animate();
 
-        const interactiveElements = document.querySelectorAll('a, .terminal-box, .hub-button, .lang-card');
+        const interactiveElements = document.querySelectorAll('a, .terminal-box, .hub-button, .lang-card, .download-btn');
         interactiveElements.forEach(el => {
             el.addEventListener('mouseenter', () => {
                 dot.classList.add('cursor-active');
