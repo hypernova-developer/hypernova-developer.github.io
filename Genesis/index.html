@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genesis | Jenny Ecosystem</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #05050a;
+            --accent-color: #9d7cff;
+            --hover-color: #ff3e3e;
+            --text-color: #ececec;
+            --card-bg: rgba(15, 12, 25, 0.7);
+            --grid-color: rgba(157, 124, 255, 0.05);
+            --terminal-bg: #0c0c14;
+            --terminal-header: #1a1a2e;
+            --section-title: #ffffff;
+            --download-glow: rgba(157, 124, 255, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none !important; 
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+            color: var(--text-color);
+            font-family: 'JetBrains Mono', monospace;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .cursor-dot {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            box-shadow: 0 0 15px var(--accent-color);
+            transform: translate(-50%, -50%);
+            transition: transform 0.2s;
+        }
+
+        .cursor-trail {
+            position: fixed;
+            width: 5px;
+            height: 5px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor-active {
+            background-color: var(--hover-color) !important;
+            transform: translate(-50%, -50%) scale(2.5);
+            box-shadow: 0 0 25px var(--hover-color);
+        }
+
+        header {
+            padding: 1.2rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--grid-color);
+            background: rgba(5, 5, 10, 0.8);
+            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .main-logo {
+            height: 32px;
+            filter: drop-shadow(0 0 5px var(--accent-color));
+        }
+
+        .brand-name {
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .hero {
+            padding: 100px 20px 60px 20px;
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+            text-shadow: 0 0 30px rgba(157, 124, 255, 0.4);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #8a8aa3;
+            margin-bottom: 3rem;
+        }
+
+        .terminal-box {
+            background: var(--terminal-bg);
+            border: 1px solid rgba(157, 124, 255, 0.2);
+            border-radius: 10px;
+            margin: 40px auto;
+            max-width: 750px;
+            text-align: left;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background: var(--terminal-header);
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+
+        .terminal-title {
+            margin-left: 10px;
+            font-size: 0.8rem;
+            color: #6e6e8e;
+        }
+
+        .terminal-content {
+            padding: 25px;
+            color: #d1d1d1;
+            font-size: 0.95rem;
+        }
+
+        .ps-prompt { color: #27c93f; }
+        .ps-cmd { color: #fff; }
+        .ps-output { color: var(--accent-color); font-weight: bold; }
+
+        .section-divider {
+            text-align: center;
+            margin: 80px 0 40px 0;
+        }
+
+        .section-divider h2 {
+            font-size: 2.2rem;
+            color: var(--section-title);
+        }
+
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .lang-card {
+            background: var(--card-bg);
+            border: 1px solid var(--grid-color);
+            padding: 30px;
+            border-radius: 15px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.4s ease;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+
+        .lang-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-10px);
+            background: rgba(157, 124, 255, 0.1);
+            box-shadow: 0 10px 40px rgba(157, 124, 255, 0.15);
+        }
+
+        .lang-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+
+        .lang-card p {
+            font-size: 0.9rem;
+            color: #8a8aa3;
+        }
+
+        .download-section {
+            display: flex;
+            justify-content: center;
+            padding: 60px 20px 100px 20px;
+        }
+
+        .download-btn {
+            background: transparent;
+            border: 2px solid var(--accent-color);
+            border-radius: 10px;
+            padding: 20px 50px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 20px var(--download-glow);
+        }
+
+        .download-btn:hover {
+            background: var(--accent-color);
+            color: var(--bg-color);
+            box-shadow: 0 0 40px var(--accent-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            border-top: 1px solid var(--grid-color);
+            font-size: 0.8rem;
+            color: #4c4c66;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            * { cursor: auto !important; }
+            .cursor-dot, .cursor-trail { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cursor-dot"></div>
+
+    <header>
+        <div class="brand">
+            <img src="favicon.png" alt="Genesis" class="main-logo">
+            <span class="brand-name">Jenny Ecosystem / Genesis</span>
+        </div>
+        <div>
+            <a href="https://github.com/hypernova-developer" class="nav-link" target="_blank" rel="noopener noreferrer">>_hypernova-developer</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>The Genesis of Intelligence</h1>
+        <p>A high-performance ecosystem powered by the Jenny AI Engine. Unified, optimized, and relentless.</p>
+        
+        <div class="terminal-box">
+            <div class="terminal-header">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+                <span class="terminal-title">Windows PowerShell</span>
+            </div>
+            <div class="terminal-content">
+                <pre>
+<span class="ps-prompt">PS C:\WINDOWS\system32></span> <span class="ps-cmd">jenny --version</span>
+
+<span class="ps-output">Jenny AI Engine - Version: 1.1.5-Beta</span>
+
+<span class="ps-prompt">PS C:\WINDOWS\system32></span> <span class="ps-cmd">_</span></pre>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider">
+        <h2>Core Modules</h2>
+    </div>
+
+    <div class="matrix-grid">
+        <a href="#" class="lang-card">
+            <h3>Jenny AI Engine</h3>
+            <p>Logic-driven neural processing with 48+ core functions and evolutionary algorithm support.</p>
+        </a>
+        <a href="#" class="lang-card">
+            <h3>CompileX Engine</h3>
+            <p>Raw power optimization layer designed for those seeking maximum execution speed without overhead.</p>
+        </a>
+        <a href="#" class="lang-card">
+            <h3>Genesis Core</h3>
+            <p>The fundamental bridge connecting high-level logic with low-level performance across languages.</p>
+        </a>
+    </div>
+
+    <div class="section-divider">
+        <h2>Language Support</h2>
+    </div>
+
+    <div class="matrix-grid">
+        <div class="lang-card"><h3>C++</h3><p>Direct Jenny Engine integration with zero-overhead wrappers.</p></div>
+        <div class="lang-card"><h3>C</h3><p>Minimalist procedural headers for contemporary system development.</p></div>
+        <div class="lang-card"><h3>C#</h3><p>Performance-first implementation for .NET environments.</p></div>
+        <div class="lang-card"><h3>Fortran</h3><p>Modern syntax standards for high-performance scientific computing.</p></div>
+    </div>
+
+    <div class="download-section">
+        <a href="genesis.bat" class="download-btn" download="genesis.bat">
+            <span>⚡</span> Install Genesis
+        </a>
+    </div>
+
+    <footer>
+        &copy; 2026 Jenny Ecosystem - Powered by Genesis.<br>
+        Developed by hypernova-developer. Distributed under GPL v3.0.
+    </footer>
+
+    <script>
+        const dot = document.querySelector('.cursor-dot');
+        const trails = [];
+        for (let i = 0; i < 8; i++) {
+            const t = document.createElement('div');
+            t.className = 'cursor-trail';
+            document.body.appendChild(t);
+            trails.push({ el: t, x: 0, y: 0 });
+        }
+
+        let mouseX = 0, mouseY = 0;
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            dot.style.left = mouseX + 'px';
+            dot.style.top = mouseY + 'px';
+        });
+
+        function animate() {
+            let x = mouseX;
+            let y = mouseY;
+            trails.forEach((t, index) => {
+                t.x += (x - t.x) * 0.2;
+                t.y += (y - t.y) * 0.2;
+                t.el.style.left = t.x + 'px';
+                t.el.style.top = t.y + 'px';
+                t.el.style.opacity = (1 - (index / 8)) * 0.5;
+                x = t.x; y = t.y;
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        const interactives = document.querySelectorAll('a, .lang-card, .download-btn, .terminal-box');
+        interactives.forEach(el => {
+            el.addEventListener('mouseenter', () => dot.classList.add('cursor-active'));
+            el.addEventListener('mouseleave', () => dot.classList.remove('cursor-active'));
+        });
+    </script>
+</body>
+</html>
