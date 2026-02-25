@@ -18,6 +18,7 @@
             --terminal-header: #1a1a2e;
             --section-title: #ffffff;
             --download-glow: rgba(157, 124, 255, 0.3);
+            --linux-color: #27c93f;
         }
 
         * {
@@ -211,7 +212,9 @@
 
         .download-section {
             display: flex;
+            flex-wrap: wrap;
             justify-content: center;
+            gap: 20px;
             padding: 60px 20px 100px 20px;
         }
 
@@ -219,14 +222,14 @@
             background: transparent;
             border: 2px solid var(--accent-color);
             border-radius: 10px;
-            padding: 20px 50px;
+            padding: 18px 40px;
             color: #fff;
             text-decoration: none;
             font-weight: bold;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             transition: all 0.4s ease;
             box-shadow: 0 0 20px var(--download-glow);
         }
@@ -235,6 +238,16 @@
             background: var(--accent-color);
             color: var(--bg-color);
             box-shadow: 0 0 40px var(--accent-color);
+        }
+
+        .download-btn.linux {
+            border-color: var(--linux-color);
+            box-shadow: 0 0 20px rgba(39, 201, 63, 0.2);
+        }
+
+        .download-btn.linux:hover {
+            background: var(--linux-color);
+            box-shadow: 0 0 40px var(--linux-color);
         }
 
         footer {
@@ -262,7 +275,7 @@
             <span class="brand-name">Jenny Ecosystem / Genesis</span>
         </div>
         <div>
-            <a href="https://github.com/hypernova-developer" class="nav-link" target="_blank" rel="noopener noreferrer">>_hypernova-developer</a>
+            <a href="https://github.com/hypernova-developer" class="nav-link" target="_blank" rel="noopener noreferrer" style="color: var(--accent-color); text-decoration: none;">>_hypernova-developer</a>
         </div>
     </header>
 
@@ -320,7 +333,10 @@
 
     <div class="download-section">
         <a href="genesis.bat" class="download-btn" download="genesis.bat">
-            <span>⚡</span> Install Genesis
+            <span>🪟</span> Install Genesis (Windows)
+        </a>
+        <a href="genesis.sh" class="download-btn linux" download="genesis.sh">
+            <span>🐧</span> Install Genesis (Linux)
         </a>
     </div>
 
