@@ -1,2 +1,2 @@
 # hypernova-developer.github.io
-My Description Web Site
+My GitHub Domain
